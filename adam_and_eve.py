@@ -15,12 +15,12 @@ print("""
 
 """)
 
-__authors__ = ["Chapin Bryce", "Preston Miller"]
-__date__ = 20170815
-__description__ = "Gather filesystem metadata of provided file"
+__authors__ = ["Adam Doukani"]
+__date__ = "1st July, 2020"
+__description__ = "Digital Forensics Tool"
 parser = argparse.ArgumentParser(
     description=__description__,
-    epilog="Developed by {} on {}".format(", ".join(__authors__), __date__)
+    epilog="Developed by {} on {}".format(__authors__, __date__)
 )
 def __hashing__():
     available_algorithms = {
@@ -53,10 +53,7 @@ def __hashing__():
 
 def __help__():
     print("""
-    Help
-    Menu
-    Is
-
+    Still in progress ...
     """)
 
 def __sysinfo__():
