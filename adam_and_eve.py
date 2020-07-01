@@ -12,7 +12,6 @@ print("""
   __    ___    __    _           __    _      ___       ____  _      ____
  / /\  | | \  / /\  | |\/|      / /\  | |\ | | | \     | |_  \ \  / | |_
 /_/--\ |_|_/ /_/--\ |_|  |     /_/--\ |_| \| |_|_/     |_|__  \_\/  |_|__
-
 """)
 
 __authors__ = ["Adam Doukani"]
@@ -35,8 +34,6 @@ def __hashing__():
     file_name = available_algorithms[hash_alg]()
     abs_path = os.path.abspath(input_file)
     file_name.update(abs_path.encode())
-
-
     print("The {} of the filename is: {}".format(
     hash_alg, file_name.hexdigest()))
     file_content = available_algorithms[hash_alg]()
@@ -50,11 +47,26 @@ def __hashing__():
 
     print("The {} of the content is: {}".format(
         hash_alg, file_content.hexdigest()))
+    my_hash = file_content.hexdigest()
+    save_hash = str(input("Do you want to save the hash value? < y - n >"))
+    try:
+        if save_hash == "y":
+            f = open("hash.txt", "w+")
+            f.write(my_hash)
+            print("Hash saved successfully, please check hash.txt file")
+    except:
+        print("Saving failed, please try again ..")
 
 def __help__():
     print("""
     Still in progress ...
     """)
+
+def check_location():
+    file_path = str(input("Specify file directory: "))
+    stat_info = os.stat(file_path)
+    print("Path: ", os.path.abspath(file_path))
+
 
 def __sysinfo__():
     file_path = str(input("Specify file directory: "))
@@ -83,7 +95,6 @@ def __sysinfo__():
     print("File Size: ", stat_info.st_size)
     # Gather other properties
     print("Is a symlink: ", os.path.islink(file_path))
-    print("Absolute Path: ", os.path.abspath(file_path))
     print("File exists: ", os.path.exists(file_path))
     print("Parent directory: ", os.path.dirname(file_path))
     print("Parent directory: {} | File name: {}".format(
@@ -93,6 +104,7 @@ print("Choose an option: ")
 print("\n0- Exit")
 print("1- TimeStamp")
 print("2- File Hash")
+print("3- Check File Path")
 print("99- Help\n")
 args = parser.parse_args()
 mode_on = True
@@ -107,5 +119,7 @@ while mode_on:
         break
     elif choice == 99:
         __help__()
+    elif choice == 3:
+        check_location()
     else:
         print("Humm that wasn't listed")
