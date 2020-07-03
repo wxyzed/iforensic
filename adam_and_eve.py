@@ -7,6 +7,10 @@ import hashlib #Hash lib
 import logging
 from collections import Counter
 import shutil
+import chain_of_custody
+import getpass
+from datetime import datetime
+
 
 print("""
   __    ___    __    _           __    _      ___       ____  _      ____
@@ -49,13 +53,13 @@ def __hashing__():
         hash_alg, file_content.hexdigest()))
     my_hash = file_content.hexdigest()
     save_hash = str(input("Do you want to save the hash value? < y - n >"))
-    try:
-        if save_hash == "y":
-            f = open("hash.txt", "w+")
-            f.write(my_hash)
-            print("Hash saved successfully, please check hash.txt file")
-    except:
-        print("Saving failed, please try again ..")
+    if save_hash == "y":
+        now = datetime.now()
+        x = getpass.getuser()
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        f = open("hash.txt", "a+")
+        f.write("Created By {} On {} {} hash is: {} for {}\n".format(x, dt_string, hash_alg , my_hash, input_file))
+        print("Hash saved successfully, please check hash.txt file")
 
 def __help__():
     print("""
@@ -105,6 +109,8 @@ print("\n0- Exit")
 print("1- TimeStamp")
 print("2- File Hash")
 print("3- Check File Path")
+print("4- Chain of Custody Report")
+print("5- Logging Event")
 print("99- Help\n")
 args = parser.parse_args()
 mode_on = True
@@ -114,9 +120,14 @@ while mode_on:
         __sysinfo__()
     elif choice == 2:
         __hashing__()
+    elif choice == 4:
+        chain_of_custody._csv_1()
     elif choice == 0:
         print("Adam and Eve send their regards!")
         break
+    elif choice == 5:
+        import main_chain_of_custody
+        main_chain_of_custody.Database()
     elif choice == 99:
         __help__()
     elif choice == 3:
